@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0s6w0etn88pj"]
+
+[ext_resource type="Texture2D" uid="uid://xekyybg88nl5" path="res://vecteezy_checkered-seamless-pattern-background-banner_22313739.jpg" id="1_j533s"]
+[ext_resource type="Script" path="res://Camera.cs" id="1_we2fm"]
+[ext_resource type="Script" path="res://Player.cs" id="2_041sx"]
+[ext_resource type="Texture2D" uid="uid://bxidfsuy2bf8h" path="res://Body.png" id="2_vccid"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sad41"]
+size = Vector2(223, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tidj6"]
+size = Vector2(1176, 80)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uyhmr"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+visible = false
+scroll_scale = Vector2(0.2, 0.2)
+follow_viewport = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_j533s")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("FollowNode")]
+process_callback = 0
+script = ExtResource("1_we2fm")
+FollowNode = NodePath("../Player")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("2_041sx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_vccid")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-1.5, 6)
+shape = SubResource("RectangleShape2D_sad41")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 350)
+shape = SubResource("RectangleShape2D_tidj6")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(1.99998, 351.5)
+scale = Vector2(2.30078, 0.166016)
+texture = SubResource("NoiseTexture2D_uyhmr")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+follow_viewport_enabled = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("1_j533s")
